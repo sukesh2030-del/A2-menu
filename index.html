@@ -1,6 +1,856 @@
-<html>
-<style>
-   div{min-height:1em;}
-</style>
-<body>&lt;!DOCTYPE html&gt;<br/>&lt;html lang=&quot;en&quot;&gt;<br/>&lt;head&gt;<br/>    &lt;meta charset=&quot;UTF-8&quot;&gt;<br/>    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;<br/>    &lt;title&gt;A2 Restaurant - Cloud Kitchen | Pure Veg Menu&lt;/title&gt;<br/>    &lt;link href=&quot;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css&quot; rel=&quot;stylesheet&quot;&gt;<br/>    &lt;style&gt;<br/>        :root {<br/>            --primary: #1b7a37;<br/>            --primary-dark: #115724;<br/>            --accent: #e65100;<br/>            --bg: #f7f8fa;<br/>            --card-bg: #ffffff;<br/>            --text: #1f2937;<br/>            --text-light: #6b7280;<br/>            --border: #e5e7eb;<br/>            --veg-color: #0f8a3c;<br/>        }<br/><br/>        * {<br/>            box-sizing: border-box;<br/>            margin: 0;<br/>            padding: 0;<br/>            font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Helvetica, Arial, sans-serif;<br/>            -webkit-tap-highlight-color: transparent;<br/>        }<br/><br/>        body {<br/>            background-color: var(--bg);<br/>            color: var(--text);<br/>            padding-bottom: 95px;<br/>        }<br/><br/>        header {<br/>            background: linear-gradient(135deg, var(--primary-dark), var(--primary));<br/>            color: white;<br/>            padding: 16px;<br/>            text-align: center;<br/>            box-shadow: 0 4px 12px rgba(0,0,0,0.08);<br/>            position: sticky;<br/>            top: 0;<br/>            z-index: 100;<br/>        }<br/><br/>        .brand-title {<br/>            font-size: 1.35rem;<br/>            font-weight: 700;<br/>            display: flex;<br/>            align-items: center;<br/>            justify-content: center;<br/>            gap: 8px;<br/>        }<br/><br/>        .veg-badge {<br/>            background-color: #ffffff;<br/>            color: var(--veg-color);<br/>            padding: 2px 8px;<br/>            border-radius: 4px;<br/>            font-size: 0.72rem;<br/>            font-weight: 800;<br/>            border: 1.5px solid var(--veg-color);<br/>            display: inline-flex;<br/>            align-items: center;<br/>            gap: 4px;<br/>        }<br/><br/>        .veg-dot {<br/>            width: 7px;<br/>            height: 7px;<br/>            background-color: var(--veg-color);<br/>            border-radius: 50%;<br/>        }<br/><br/>        .subtitle {<br/>            font-size: 0.8rem;<br/>            opacity: 0.92;<br/>            margin-top: 3px;<br/>        }<br/><br/>        /* Search Bar */<br/>        .search-container {<br/>            max-width: 600px;<br/>            margin: 10px auto 0 auto;<br/>            padding: 0 14px;<br/>        }<br/><br/>        .search-box {<br/>            position: relative;<br/>            display: flex;<br/>            align-items: center;<br/>        }<br/><br/>        .search-box i {<br/>            position: absolute;<br/>            left: 14px;<br/>            color: var(--text-light);<br/>            font-size: 0.9rem;<br/>        }<br/><br/>        .search-input {<br/>            width: 100%;<br/>            padding: 10px 14px 10px 38px;<br/>            border-radius: 25px;<br/>            border: 1px solid var(--border);<br/>            font-size: 0.9rem;<br/>            outline: none;<br/>            background: white;<br/>            box-shadow: 0 2px 5px rgba(0,0,0,0.03);<br/>            transition: border 0.2s;<br/>        }<br/><br/>        .search-input:focus {<br/>            border-color: var(--primary);<br/>        }<br/><br/>        /* Sticky Category Navigation */<br/>        .category-nav-wrapper {<br/>            position: sticky;<br/>            top: 66px;<br/>            z-index: 99;<br/>            background: white;<br/>            box-shadow: 0 2px 6px rgba(0,0,0,0.06);<br/>        }<br/><br/>        .category-nav {<br/>            display: flex;<br/>            overflow-x: auto;<br/>            padding: 10px 14px;<br/>            gap: 8px;<br/>            scrollbar-width: none;<br/>            max-width: 600px;<br/>            margin: 0 auto;<br/>        }<br/><br/>        .category-nav::-webkit-scrollbar {<br/>            display: none;<br/>        }<br/><br/>        .cat-btn {<br/>            background: #f1f3f5;<br/>            border: none;<br/>            padding: 7px 15px;<br/>            border-radius: 20px;<br/>            font-size: 0.82rem;<br/>            white-space: nowrap;<br/>            cursor: pointer;<br/>            font-weight: 600;<br/>            color: var(--text-light);<br/>            transition: all 0.2s ease;<br/>        }<br/><br/>        .cat-btn.active {<br/>            background: var(--primary);<br/>            color: white;<br/>            box-shadow: 0 2px 6px rgba(27, 122, 55, 0.35);<br/>        }<br/><br/>        .container {<br/>            max-width: 600px;<br/>            margin: 0 auto;<br/>            padding: 14px;<br/>        }<br/><br/>        .section-title {<br/>            font-size: 1.05rem;<br/>            font-weight: 700;<br/>            margin: 18px 0 10px 0;<br/>            color: var(--primary-dark);<br/>            display: flex;<br/>            align-items: center;<br/>            gap: 8px;<br/>        }<br/><br/>        .section-title::after {<br/>            content: &quot;&quot;;<br/>            flex: 1;<br/>            height: 1px;<br/>            background: var(--border);<br/>        }<br/><br/>        /* Food Item Card */<br/>        .item-card {<br/>            background: var(--card-bg);<br/>            border-radius: 12px;<br/>            padding: 14px;<br/>            margin-bottom: 10px;<br/>            display: flex;<br/>            justify-content: space-between;<br/>            align-items: center;<br/>            box-shadow: 0 2px 4px rgba(0,0,0,0.03);<br/>            border: 1px solid var(--border);<br/>        }<br/><br/>        .item-details {<br/>            flex: 1;<br/>            padding-right: 12px;<br/>        }<br/><br/>        .veg-symbol {<br/>            display: inline-flex;<br/>            align-items: center;<br/>            justify-content: center;<br/>            width: 14px;<br/>            height: 14px;<br/>            border: 1.5px solid var(--veg-color);<br/>            padding: 1px;<br/>            margin-bottom: 4px;<br/>        }<br/><br/>        .veg-symbol span {<br/>            width: 6px;<br/>            height: 6px;<br/>            background-color: var(--veg-color);<br/>            border-radius: 50%;<br/>        }<br/><br/>        .item-name {<br/>            font-weight: 600;<br/>            font-size: 0.95rem;<br/>            color: #111;<br/>            margin-bottom: 4px;<br/>        }<br/><br/>        .item-price {<br/>            font-weight: 700;<br/>            color: var(--text);<br/>            font-size: 0.95rem;<br/>        }<br/><br/>        /* Add / Quantity Buttons */<br/>        .add-btn-container {<br/>            display: flex;<br/>            align-items: center;<br/>            background: #ffffff;<br/>            border: 1.5px solid var(--primary);<br/>            border-radius: 8px;<br/>            overflow: hidden;<br/>            box-shadow: 0 2px 5px rgba(0,0,0,0.05);<br/>        }<br/><br/>        .qty-btn {<br/>            background: #f4fbf6;<br/>            border: none;<br/>            color: var(--primary);<br/>            width: 32px;<br/>            height: 32px;<br/>            font-weight: bold;<br/>            font-size: 1.15rem;<br/>            cursor: pointer;<br/>            display: flex;<br/>            align-items: center;<br/>            justify-content: center;<br/>        }<br/><br/>        .qty-btn:active {<br/>            background: #dff3e4;<br/>        }<br/><br/>        .qty-count {<br/>            width: 30px;<br/>            text-align: center;<br/>            font-weight: 700;<br/>            font-size: 0.9rem;<br/>            color: var(--primary-dark);<br/>        }<br/><br/>        .btn-add {<br/>            background: white;<br/>            color: var(--primary);<br/>            border: 1.5px solid var(--primary);<br/>            padding: 7px 18px;<br/>            border-radius: 8px;<br/>            font-weight: 700;<br/>            font-size: 0.85rem;<br/>            cursor: pointer;<br/>            box-shadow: 0 2px 4px rgba(0,0,0,0.04);<br/>            transition: all 0.2s;<br/>        }<br/><br/>        .btn-add:active {<br/>            background: var(--primary);<br/>            color: white;<br/>        }<br/><br/>        /* Bottom Cart Bar */<br/>        .cart-bar-wrapper {<br/>            position: fixed;<br/>            bottom: 0;<br/>            left: 0;<br/>            right: 0;<br/>            z-index: 1000;<br/>            padding: 10px 14px 14px 14px;<br/>            background: transparent;<br/>            pointer-events: none;<br/>        }<br/><br/>        .cart-bar {<br/>            background: #111827;<br/>            color: white;<br/>            padding: 12px 16px;<br/>            border-radius: 12px;<br/>            box-shadow: 0 8px 20px rgba(0,0,0,0.25);<br/>            display: flex;<br/>            justify-content: space-between;<br/>            align-items: center;<br/>            max-width: 600px;<br/>            margin: 0 auto;<br/>            pointer-events: auto;<br/>            animation: slideIn 0.2s ease-out;<br/>        }<br/><br/>        @keyframes slideIn {<br/>            from { transform: translateY(20px); opacity: 0; }<br/>            to { transform: translateY(0); opacity: 1; }<br/>        }<br/><br/>        .cart-info {<br/>            display: flex;<br/>            flex-direction: column;<br/>        }<br/><br/>        .cart-count {<br/>            font-size: 0.75rem;<br/>            color: #9ca3af;<br/>            text-transform: uppercase;<br/>            letter-spacing: 0.5px;<br/>        }<br/><br/>        .cart-total {<br/>            font-size: 1.15rem;<br/>            font-weight: 700;<br/>            color: #ffffff;<br/>        }<br/><br/>        .checkout-btn {<br/>            background: #25D366;<br/>            color: white;<br/>            border: none;<br/>            padding: 9px 18px;<br/>            border-radius: 8px;<br/>            font-weight: 700;<br/>            font-size: 0.92rem;<br/>            display: flex;<br/>            align-items: center;<br/>            gap: 7px;<br/>            cursor: pointer;<br/>        }<br/><br/>        /* Modal Sheet */<br/>        .modal {<br/>            display: none;<br/>            position: fixed;<br/>            top: 0; left: 0; right: 0; bottom: 0;<br/>            background: rgba(0,0,0,0.6);<br/>            z-index: 2000;<br/>            justify-content: center;<br/>            align-items: flex-end;<br/>            backdrop-filter: blur(2px);<br/>        }<br/><br/>        .modal.active {<br/>            display: flex;<br/>        }<br/><br/>        .modal-content {<br/>            background: white;<br/>            width: 100%;<br/>            max-width: 600px;<br/>            border-radius: 20px 20px 0 0;<br/>            padding: 22px;<br/>            animation: slideUp 0.25s ease-out;<br/>        }<br/><br/>        @keyframes slideUp {<br/>            from { transform: translateY(100%); }<br/>            to { transform: translateY(0); }<br/>        }<br/><br/>        .form-group {<br/>            margin-bottom: 12px;<br/>        }<br/><br/>        .form-group label {<br/>            display: block;<br/>            font-size: 0.82rem;<br/>            font-weight: 600;<br/>            margin-bottom: 4px;<br/>            color: #374151;<br/>        }<br/><br/>        .form-group input, .form-group textarea {<br/>            width: 100%;<br/>            padding: 10px 12px;<br/>            border: 1px solid var(--border);<br/>            border-radius: 8px;<br/>            font-size: 0.95rem;<br/>            outline: none;<br/>        }<br/><br/>        .form-group input:focus, .form-group textarea:focus {<br/>            border-color: var(--primary);<br/>        }<br/><br/>        .modal-btns {<br/>            display: flex;<br/>            gap: 10px;<br/>            margin-top: 18px;<br/>        }<br/><br/>        .modal-btn {<br/>            flex: 1;<br/>            padding: 12px;<br/>            border: none;<br/>            border-radius: 8px;<br/>            font-weight: 700;<br/>            font-size: 0.95rem;<br/>            cursor: pointer;<br/>        }<br/><br/>        .btn-cancel {<br/>            background: #f3f4f6;<br/>            color: #4b5563;<br/>        }<br/><br/>        .btn-submit {<br/>            background: #25D366;<br/>            color: white;<br/>            display: flex;<br/>            align-items: center;<br/>            justify-content: center;<br/>            gap: 6px;<br/>        }<br/><br/>        .no-results {<br/>            text-align: center;<br/>            padding: 30px 10px;<br/>            color: var(--text-light);<br/>            font-size: 0.95rem;<br/>        }<br/>    &lt;/style&gt;<br/>&lt;/head&gt;<br/>&lt;body&gt;<br/><br/>    &lt;header&gt;<br/>        &lt;div class=&quot;brand-title&quot;&gt;<br/>            A2 Restaurant<br/>            &lt;span class=&quot;veg-badge&quot;&gt;&lt;span class=&quot;veg-dot&quot;&gt;&lt;/span&gt; PURE VEG&lt;/span&gt;<br/>        &lt;/div&gt;<br/>        &lt;div class=&quot;subtitle&quot;&gt;Cloud Kitchen • QR Direct Ordering&lt;/div&gt;<br/>    &lt;/header&gt;<br/><br/>    &lt;div class=&quot;search-container&quot;&gt;<br/>        &lt;div class=&quot;search-box&quot;&gt;<br/>            &lt;i class=&quot;fas fa-search&quot;&gt;&lt;/i&gt;<br/>            &lt;input type=&quot;text&quot; id=&quot;searchInput&quot; class=&quot;search-input&quot; placeholder=&quot;Search dishes (e.g. Paneer, Paratha, Thali)...&quot; oninput=&quot;filterMenu()&quot;&gt;<br/>        &lt;/div&gt;<br/>    &lt;/div&gt;<br/><br/>    &lt;div class=&quot;category-nav-wrapper&quot; id=&quot;navWrapper&quot;&gt;<br/>        &lt;div class=&quot;category-nav&quot; id=&quot;categoryNav&quot;&gt;&lt;/div&gt;<br/>    &lt;/div&gt;<br/><br/>    &lt;div class=&quot;container&quot; id=&quot;menuContainer&quot;&gt;&lt;/div&gt;<br/><br/>    &lt;!-- Bottom Cart Bar --&gt;<br/>    &lt;div class=&quot;cart-bar-wrapper&quot;&gt;<br/>        &lt;div class=&quot;cart-bar&quot; id=&quot;cartBar&quot; style=&quot;display: none;&quot;&gt;<br/>            &lt;div class=&quot;cart-info&quot;&gt;<br/>                &lt;span class=&quot;cart-count&quot; id=&quot;cartCount&quot;&gt;0 ITEMS&lt;/span&gt;<br/>                &lt;span class=&quot;cart-total&quot; id=&quot;cartTotal&quot;&gt;₹0&lt;/span&gt;<br/>            &lt;/div&gt;<br/>            &lt;button class=&quot;checkout-btn&quot; onclick=&quot;openOrderModal()&quot;&gt;<br/>                &lt;i class=&quot;fab fa-whatsapp&quot;&gt;&lt;/i&gt; Order Now<br/>            &lt;/button&gt;<br/>        &lt;/div&gt;<br/>    &lt;/div&gt;<br/><br/>    &lt;!-- Customer Details Modal --&gt;<br/>    &lt;div class=&quot;modal&quot; id=&quot;orderModal&quot; onclick=&quot;handleBackdropClick(event)&quot;&gt;<br/>        &lt;div class=&quot;modal-content&quot; onclick=&quot;event.stopPropagation()&quot;&gt;<br/>            &lt;h3 style=&quot;margin-bottom: 14px; font-size: 1.1rem; color: #111;&quot;&gt;Delivery Details&lt;/h3&gt;<br/>            &lt;div class=&quot;form-group&quot;&gt;<br/>                &lt;label&gt;Aapka Naam (Name) *&lt;/label&gt;<br/>                &lt;input type=&quot;text&quot; id=&quot;custName&quot; placeholder=&quot;Enter your full name&quot;&gt;<br/>            &lt;/div&gt;<br/>            &lt;div class=&quot;form-group&quot;&gt;<br/>                &lt;label&gt;Pura Pata (Delivery Address) *&lt;/label&gt;<br/>                &lt;textarea id=&quot;custAddress&quot; rows=&quot;2&quot; placeholder=&quot;House/Flat No, Landmark, Area...&quot;&gt;&lt;/textarea&gt;<br/>            &lt;/div&gt;<br/>            &lt;div class=&quot;form-group&quot;&gt;<br/>                &lt;label&gt;Phone Number *&lt;/label&gt;<br/>                &lt;input type=&quot;tel&quot; id=&quot;custPhone&quot; maxlength=&quot;10&quot; placeholder=&quot;10-digit mobile number&quot;&gt;<br/>            &lt;/div&gt;<br/>            &lt;div class=&quot;modal-btns&quot;&gt;<br/>                &lt;button type=&quot;button&quot; class=&quot;modal-btn btn-cancel&quot; onclick=&quot;closeOrderModal()&quot;&gt;Cancel&lt;/button&gt;<br/>                &lt;button type=&quot;button&quot; class=&quot;modal-btn btn-submit&quot; onclick=&quot;sendWhatsAppOrder()&quot;&gt;<br/>                    &lt;i class=&quot;fab fa-whatsapp&quot;&gt;&lt;/i&gt; Confirm Order<br/>                &lt;/button&gt;<br/>            &lt;/div&gt;<br/>        &lt;/div&gt;<br/>    &lt;/div&gt;<br/><br/>    &lt;script&gt;<br/>        // Updated WhatsApp Number<br/>        const RESTAURANT_WHATSAPP_NUMBER = &quot;919389205487&quot;;<br/><br/>        // Menu Data<br/>        const menuData = [<br/>            {<br/>                category: &quot;Combos &amp; Thalis&quot;,<br/>                items: [<br/>                    { id: 1, name: &quot;Special Thali&quot;, price: 177.45 },<br/>                    { id: 2, name: &quot;Deluxe Thali&quot;, price: 240.45 },<br/>                    { id: 3, name: &quot;Thali&quot;, price: 145.95 },<br/>                    { id: 4, name: &quot;Jain Poori Sabji Thali&quot;, price: 124.95 },<br/>                    { id: 5, name: &quot;Matar paneer with Tawa Roti combo&quot;, price: 177.45 },<br/>                    { id: 6, name: &quot;Laccha Paratha With Matar paneer combo&quot;, price: 198.45 },<br/>                    { id: 7, name: &quot;Dal Fry With Tawa Roti Combo&quot;, price: 166.95 },<br/>                    { id: 8, name: &quot;Matar Aloo With Tawa Roti Combo&quot;, price: 124.95 },<br/>                    { id: 9, name: &quot;Aloo Sabji With Tawa Roti Combo&quot;, price: 103.95 },<br/>                    { id: 10, name: &quot;Aloo Fry With Paratha&quot;, price: 135.45 }<br/>                ]<br/>            },<br/>            {<br/>                category: &quot;Chole &amp; Poori&quot;,<br/>                items: [<br/>                    { id: 11, name: &quot;Chole Chawal (Half)&quot;, price: 135.45 },<br/>                    { id: 12, name: &quot;Chole Chawal (Full)&quot;, price: 187.95 },<br/>                    { id: 13, name: &quot;Chole Kulcha (2 Kulcha)&quot;, price: 114.45 },<br/>                    { id: 14, name: &quot;Chole Poori (5 Pcs)&quot;, price: 135.45 },<br/>                    { id: 15, name: &quot;Chole Poori (10 Pcs)&quot;, price: 177.45 },<br/>                    { id: 16, name: &quot;Aloo puri (5 Pcs)&quot;, price: 103.95 },<br/>                    { id: 17, name: &quot;Aloo puri (10 Pcs)&quot;, price: 145.95 },<br/>                    { id: 18, name: &quot;Aloo Kachori&quot;, price: 166.95 },<br/>                    { id: 19, name: &quot;Aloo Pyaz Kachori&quot;, price: 177.45 }<br/>                ]<br/>            },<br/>            {<br/>                category: &quot;Parathas &amp; Roti&quot;,<br/>                items: [<br/>                    { id: 20, name: &quot;Aloo Paratha&quot;, price: 82.95 },<br/>                    { id: 21, name: &quot;Aloo pyaj paratha&quot;, price: 103.95 },<br/>                    { id: 22, name: &quot;Aloo Paratha With Curd&quot;, price: 93.45 },<br/>                    { id: 23, name: &quot;Aloo Cheese Paratha&quot;, price: 103.95 },<br/>                    { id: 24, name: &quot;Paneer Paratha&quot;, price: 103.95 },<br/>                    { id: 25, name: &quot;Gobhi Ka Paratha&quot;, price: 103.95 },<br/>                    { id: 26, name: &quot;Matar Ka Paratha&quot;, price: 103.95 },<br/>                    { id: 27, name: &quot;Sada paratha&quot;, price: 61.95 },<br/>                    { id: 28, name: &quot;Lachha paratha&quot;, price: 61.95 },<br/>                    { id: 29, name: &quot;Tawa Roti (Sada)&quot;, price: 12.60 },<br/>                    { id: 30, name: &quot;Tawa Roti (Butter)&quot;, price: 15.75 }<br/>                ]<br/>            },<br/>            {<br/>                category: &quot;Pizzas&quot;,<br/>                items: [<br/>                    { id: 31, name: &quot;Onion Cheese pizza&quot;, price: 93.45 },<br/>                    { id: 32, name: &quot;Tomato cheese Pizza&quot;, price: 93.45 },<br/>                    { id: 33, name: &quot;Capsicum cheese Pizza&quot;, price: 93.45 },<br/>                    { id: 34, name: &quot;Onion capsicum Cheese Pizza&quot;, price: 93.45 },<br/>                    { id: 35, name: &quot;Paneer Onion Cheese Pizza&quot;, price: 124.95 },<br/>                    { id: 36, name: &quot;Onion Capsicum Paneer Cheesy Pizza&quot;, price: 166.95 }<br/>                ]<br/>            },<br/>            {<br/>                category: &quot;Maggi &amp; Fast Food&quot;,<br/>                items: [<br/>                    { id: 37, name: &quot;Plain Maggi&quot;, price: 82.95 },<br/>                    { id: 38, name: &quot;Vegetable Maggi&quot;, price: 124.95 },<br/>                    { id: 39, name: &quot;Butter Maggi&quot;, price: 124.95 },<br/>                    { id: 40, name: &quot;Vegetable Butter Maggi&quot;, price: 166.95 },<br/>                    { id: 41, name: &quot;Cheese Corn Maggi&quot;, price: 208.95 },<br/>                    { id: 42, name: &quot;Pav Bhaji&quot;, price: 135.45 },<br/>                    { id: 43, name: &quot;Veg Chowmein (Half)&quot;, price: 61.95 },<br/>                    { id: 44, name: &quot;Veg Chowmein (Full)&quot;, price: 114.45 }<br/>                ]<br/>            },<br/>            {<br/>                category: &quot;Sandwiches &amp; Cheela&quot;,<br/>                items: [<br/>                    { id: 45, name: &quot;Aloo sandwich&quot;, price: 82.95 },<br/>                    { id: 46, name: &quot;Aloo Cheese Sandwich&quot;, price: 103.95 },<br/>                    { id: 47, name: &quot;Veg Mayonnaise Sandwich&quot;, price: 145.95 },<br/>                    { id: 48, name: &quot;Aloo Paneer Sandwich&quot;, price: 145.95 },<br/>                    { id: 49, name: &quot;Besan Cheela&quot;, price: 72.45 },<br/>                    { id: 50, name: &quot;Veggies Besan Cheela&quot;, price: 93.45 }<br/>                ]<br/>            },<br/>            {<br/>                category: &quot;Curries &amp; Main Course&quot;,<br/>                items: [<br/>                    { id: 51, name: &quot;Matar Paneer (Half)&quot;, price: 166.95 },<br/>                    { id: 52, name: &quot;Matar Paneer (Full)&quot;, price: 252.00 },<br/>                    { id: 53, name: &quot;Chilli Paneer (Half)&quot;, price: 229.95 },<br/>                    { id: 54, name: &quot;Chilli Paneer (Full)&quot;, price: 304.50 },<br/>                    { id: 55, name: &quot;Paneer Special (Half)&quot;, price: 250.95 },<br/>                    { id: 56, name: &quot;Paneer Special (Full)&quot;, price: 325.50 },<br/>                    { id: 57, name: &quot;Aloo Fry (Half)&quot;, price: 103.95 },<br/>                    { id: 58, name: &quot;Aloo Fry (Full)&quot;, price: 135.45 },<br/>                    { id: 59, name: &quot;Aloo Matar&quot;, price: 82.95 }<br/>                ]<br/>            },<br/>            {<br/>                category: &quot;Rice &amp; Sides&quot;,<br/>                items: [<br/>                    { id: 60, name: &quot;Poha (Half)&quot;, price: 72.45 },<br/>                    { id: 61, name: &quot;Poha (Full)&quot;, price: 103.95 },<br/>                    { id: 62, name: &quot;Plain Rice (Half)&quot;, price: 72.45 },<br/>                    { id: 63, name: &quot;Plain Rice (Full)&quot;, price: 103.95 },<br/>                    { id: 64, name: &quot;Dal Rice (Half)&quot;, price: 103.95 },<br/>                    { id: 65, name: &quot;Dal Rice (Full)&quot;, price: 156.45 },<br/>                    { id: 66, name: &quot;Boondi Raita&quot;, price: 72.45 },<br/>                    { id: 67, name: &quot;Curd&quot;, price: 30.00 },<br/>                    { id: 68, name: &quot;Salad&quot;, price: 20.00 },<br/>                    { id: 69, name: &quot;Sada Chai&quot;, price: 40.95 },<br/>                    { id: 70, name: &quot;Adrak Chai&quot;, price: 51.45 }<br/>                ]<br/>            }<br/>        ];<br/><br/>        // Quick Lookup Map for fast calculations<br/>        const itemLookup = {};<br/>        menuData.forEach(cat =&gt; {<br/>            cat.items.forEach(item =&gt; {<br/>                itemLookup[item.id] = item;<br/>            });<br/>        });<br/><br/>        let cart = {};<br/><br/>        function renderMenu(filterKeyword = &quot;&quot;) {<br/>            const catNav = document.getElementById(&#39;categoryNav&#39;);<br/>            const menuContainer = document.getElementById(&#39;menuContainer&#39;);<br/>            const navWrapper = document.getElementById(&#39;navWrapper&#39;);<br/><br/>            catNav.innerHTML = &#39;&#39;;<br/>            menuContainer.innerHTML = &#39;&#39;;<br/><br/>            const keyword = filterKeyword.toLowerCase().trim();<br/>            let totalRendered = 0;<br/><br/>            if (keyword) {<br/>                navWrapper.style.display = &quot;none&quot;;<br/>            } else {<br/>                navWrapper.style.display = &quot;block&quot;;<br/>            }<br/><br/>            menuData.forEach((cat, index) =&gt; {<br/>                const catId = `cat-${index}`;<br/>                const filteredItems = cat.items.filter(item =&gt; item.name.toLowerCase().includes(keyword));<br/><br/>                if (filteredItems.length === 0) return;<br/><br/>                totalRendered += filteredItems.length;<br/><br/>                // Category Nav Pill<br/>                if (!keyword) {<br/>                    const btn = document.createElement(&#39;button&#39;);<br/>                    btn.className = `cat-btn ${index === 0 ? &#39;active&#39; : &#39;&#39;}`;<br/>                    btn.id = `pill-${catId}`;<br/>                    btn.innerText = cat.category;<br/>                    btn.onclick = () =&gt; scrollToCategory(catId);<br/>                    catNav.appendChild(btn);<br/>                }<br/><br/>                // Section Header<br/>                const title = document.createElement(&#39;div&#39;);<br/>                title.className = &#39;section-title&#39;;<br/>                title.id = catId;<br/>                title.innerText = cat.category;<br/>                menuContainer.appendChild(title);<br/><br/>                // Items list<br/>                filteredItems.forEach(item =&gt; {<br/>                    const card = document.createElement(&#39;div&#39;);<br/>                    card.className = &#39;item-card&#39;;<br/>                    card.innerHTML = `<br/>                        &lt;div class=&quot;item-details&quot;&gt;<br/>                            &lt;div class=&quot;veg-symbol&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt;<br/>                            &lt;div class=&quot;item-name&quot;&gt;${item.name}&lt;/div&gt;<br/>                            &lt;div class=&quot;item-price&quot;&gt;₹${Math.round(item.price)}&lt;/div&gt;<br/>                        &lt;/div&gt;<br/>                        &lt;div id=&quot;btn-box-${item.id}&quot;&gt;<br/>                            ${renderButton(item.id)}<br/>                        &lt;/div&gt;<br/>                    `;<br/>                    menuContainer.appendChild(card);<br/>                });<br/>            });<br/><br/>            if (totalRendered === 0) {<br/>                menuContainer.innerHTML = `<br/>                    &lt;div class=&quot;no-results&quot;&gt;<br/>                        &lt;i class=&quot;fas fa-search&quot; style=&quot;font-size: 2rem; margin-bottom: 8px; opacity: 0.4;&quot;&gt;&lt;/i&gt;<br/>                        &lt;p&gt;No dishes found matching &quot;${filterKeyword}&quot;.&lt;/p&gt;<br/>                    &lt;/div&gt;<br/>                `;<br/>            }<br/>        }<br/><br/>        function renderButton(itemId) {<br/>            const qty = cart[itemId] || 0;<br/>            if (qty &gt; 0) {<br/>                return `<br/>                    &lt;div class=&quot;add-btn-container&quot;&gt;<br/>                        &lt;button type=&quot;button&quot; class=&quot;qty-btn&quot; onclick=&quot;updateQty(${itemId}, -1)&quot;&gt;−&lt;/button&gt;<br/>                        &lt;span class=&quot;qty-count&quot;&gt;${qty}&lt;/span&gt;<br/>                        &lt;button type=&quot;button&quot; class=&quot;qty-btn&quot; onclick=&quot;updateQty(${itemId}, 1)&quot;&gt;+&lt;/button&gt;<br/>                    &lt;/div&gt;<br/>                `;<br/>            }<br/>            return `&lt;button type=&quot;button&quot; class=&quot;btn-add&quot; onclick=&quot;updateQty(${itemId}, 1)&quot;&gt;ADD&lt;/button&gt;`;<br/>        }<br/><br/>        function updateQty(itemId, change) {<br/>            const currentQty = cart[itemId] || 0;<br/>            const newQty = currentQty + change;<br/>            if (newQty &lt;= 0) {<br/>                delete cart[itemId];<br/>            } else {<br/>                cart[itemId] = newQty;<br/>            }<br/><br/>            const box = document.getElementById(`btn-box-${itemId}`);<br/>            if (box) box.innerHTML = renderButton(itemId);<br/><br/>            updateCartBar();<br/>        }<br/><br/>        function updateCartBar() {<br/>            const cartBar = document.getElementById(&#39;cartBar&#39;);<br/>            let totalItems = 0;<br/>            let totalPrice = 0;<br/><br/>            for (let id in cart) {<br/>                const qty = cart[id];<br/>                if (qty &gt; 0 &amp;&amp; itemLookup[id]) {<br/>                    totalItems += qty;<br/>                    totalPrice += Math.round(itemLookup[id].price) * qty;<br/>                }<br/>            }<br/><br/>            if (totalItems &gt; 0) {<br/>                cartBar.style.display = &#39;flex&#39;;<br/>                document.getElementById(&#39;cartCount&#39;).innerText = `${totalItems} ${totalItems === 1 ? &#39;ITEM&#39; : &#39;ITEMS&#39;}`;<br/>                document.getElementById(&#39;cartTotal&#39;).innerText = `Total: ₹${totalPrice}`;<br/>            } else {<br/>                cartBar.style.display = &#39;none&#39;;<br/>            }<br/>        }<br/><br/>        function scrollToCategory(catId) {<br/>            const element = document.getElementById(catId);<br/>            if (!element) return;<br/>            const offset = 120;<br/>            const top = element.getBoundingClientRect().top + window.pageYOffset - offset;<br/>            window.scrollTo({ top, behavior: &#39;smooth&#39; });<br/>        }<br/><br/>        function filterMenu() {<br/>            const query = document.getElementById(&#39;searchInput&#39;).value;<br/>            renderMenu(query);<br/>        }<br/><br/>        // Scrollspy to auto-highlight category tabs<br/>        window.addEventListener(&#39;scroll&#39;, () =&gt; {<br/>            const searchVal = document.getElementById(&#39;searchInput&#39;).value.trim();<br/>            if (searchVal) return;<br/><br/>            const sections = document.querySelectorAll(&#39;.section-title&#39;);<br/>            let current = &quot;&quot;;<br/><br/>            sections.forEach(sec =&gt; {<br/>                const secTop = sec.getBoundingClientRect().top;<br/>                if (secTop &lt;= 140) {<br/>                    current = sec.getAttribute(&#39;id&#39;);<br/>                }<br/>            });<br/><br/>            if (current) {<br/>                document.querySelectorAll(&#39;.cat-btn&#39;).forEach(btn =&gt; {<br/>                    btn.classList.remove(&#39;active&#39;);<br/>                    if (btn.id === `pill-${current}`) {<br/>                        btn.classList.add(&#39;active&#39;);<br/>                        btn.scrollIntoView({ behavior: &#39;smooth&#39;, inline: &#39;nearest&#39;, block: &#39;nearest&#39; });<br/>                    }<br/>                });<br/>            }<br/>        });<br/><br/>        function openOrderModal() {<br/>            document.getElementById(&#39;orderModal&#39;).classList.add(&#39;active&#39;);<br/>        }<br/><br/>        function closeOrderModal() {<br/>            document.getElementById(&#39;orderModal&#39;).classList.remove(&#39;active&#39;);<br/>        }<br/><br/>        function handleBackdropClick(e) {<br/>            if (e.target.id === &#39;orderModal&#39;) {<br/>                closeOrderModal();<br/>            }<br/>        }<br/><br/>        function sendWhatsAppOrder() {<br/>            const name = document.getElementById(&#39;custName&#39;).value.trim();<br/>            const address = document.getElementById(&#39;custAddress&#39;).value.trim();<br/>            const phone = document.getElementById(&#39;custPhone&#39;).value.trim();<br/><br/>            if (!name || !address || !phone) {<br/>                alert(&#39;Kripya saari details (Naam, Pata, Phone) bharein!&#39;);<br/>                return;<br/>            }<br/><br/>            if (!/^\d{10}$/.test(phone)) {<br/>                alert(&#39;Kripya 10-digit valid mobile number enter karein!&#39;);<br/>                return;<br/>            }<br/><br/>            let orderText = `*New Order - A2 Restaurant (Pure Veg)*\n`;<br/>            orderText += `--------------------------------\n`;<br/>            orderText += `👤 *Customer:* ${name}\n`;<br/>            orderText += `📞 *Phone:* ${phone}\n`;<br/>            orderText += `📍 *Address:* ${address}\n`;<br/>            orderText += `--------------------------------\n`;<br/>            orderText += `*Ordered Items:*\n`;<br/><br/>            let grandTotal = 0;<br/>            for (let id in cart) {<br/>                const qty = cart[id];<br/>                if (qty &gt; 0 &amp;&amp; itemLookup[id]) {<br/>                    const item = itemLookup[id];<br/>                    const itemTotal = Math.round(item.price) * qty;<br/>                    grandTotal += itemTotal;<br/>                    orderText += `• ${item.name} × ${qty} = ₹${itemTotal}\n`;<br/>                }<br/>            }<br/><br/>            orderText += `--------------------------------\n`;<br/>            orderText += `*Grand Total: ₹${grandTotal}*\n`;<br/>            orderText += `*Delivery Fee: ₹0 (Free)*\n\n`;<br/>            orderText += `_Order sent via QR Online Menu_`;<br/><br/>            const encodedMessage = encodeURIComponent(orderText);<br/>            const whatsappUrl = `https://wa.me/${RESTAURANT_WHATSAPP_NUMBER}?text=${encodedMessage}`;<br/><br/>            window.open(whatsappUrl, &#39;_blank&#39;);<br/>            closeOrderModal();<br/>        }<br/><br/>        // Initialize Menu<br/>        renderMenu();<br/>    &lt;/script&gt;<br/>&lt;/body&gt;<br/>&lt;/html&gt;</body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2 Restaurant - Cloud Kitchen | Pure Veg Menu</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1b7a37;
+            --primary-dark: #115724;
+            --accent: #e65100;
+            --bg: #f7f8fa;
+            --card-bg: #ffffff;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --border: #e5e7eb;
+            --veg-color: #0f8a3c;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            padding-bottom: 95px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: white;
+            padding: 16px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .veg-badge {
+            background-color: #ffffff;
+            color: var(--veg-color);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            border: 1.5px solid var(--veg-color);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .veg-dot {
+            width: 7px;
+            height: 7px;
+            background-color: var(--veg-color);
+            border-radius: 50%;
+        }
+
+        .subtitle {
+            font-size: 0.8rem;
+            opacity: 0.92;
+            margin-top: 3px;
+        }
+
+        /* Search Bar */
+        .search-container {
+            max-width: 600px;
+            margin: 10px auto 0 auto;
+            padding: 0 14px;
+        }
+
+        .search-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 14px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 14px 10px 38px;
+            border-radius: 25px;
+            border: 1px solid var(--border);
+            font-size: 0.9rem;
+            outline: none;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            transition: border 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+        }
+
+        /* Sticky Category Navigation */
+        .category-nav-wrapper {
+            position: sticky;
+            top: 66px;
+            z-index: 99;
+            background: white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        }
+
+        .category-nav {
+            display: flex;
+            overflow-x: auto;
+            padding: 10px 14px;
+            gap: 8px;
+            scrollbar-width: none;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .category-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .cat-btn {
+            background: #f1f3f5;
+            border: none;
+            padding: 7px 15px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            white-space: nowrap;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-light);
+            transition: all 0.2s ease;
+        }
+
+        .cat-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 2px 6px rgba(27, 122, 55, 0.35);
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 14px;
+        }
+
+        .section-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin: 18px 0 10px 0;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* Food Item Card */
+        .item-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            border: 1px solid var(--border);
+        }
+
+        .item-details {
+            flex: 1;
+            padding-right: 12px;
+        }
+
+        .veg-symbol {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 14px;
+            height: 14px;
+            border: 1.5px solid var(--veg-color);
+            padding: 1px;
+            margin-bottom: 4px;
+        }
+
+        .veg-symbol span {
+            width: 6px;
+            height: 6px;
+            background-color: var(--veg-color);
+            border-radius: 50%;
+        }
+
+        .item-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #111;
+            margin-bottom: 4px;
+        }
+
+        .item-price {
+            font-weight: 700;
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+
+        /* Add / Quantity Buttons */
+        .add-btn-container {
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            border: 1.5px solid var(--primary);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .qty-btn {
+            background: #f4fbf6;
+            border: none;
+            color: var(--primary);
+            width: 32px;
+            height: 32px;
+            font-weight: bold;
+            font-size: 1.15rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qty-btn:active {
+            background: #dff3e4;
+        }
+
+        .qty-count {
+            width: 30px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--primary-dark);
+        }
+
+        .btn-add {
+            background: white;
+            color: var(--primary);
+            border: 1.5px solid var(--primary);
+            padding: 7px 18px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            transition: all 0.2s;
+        }
+
+        .btn-add:active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Bottom Cart Bar */
+        .cart-bar-wrapper {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 10px 14px 14px 14px;
+            background: transparent;
+            pointer-events: none;
+        }
+
+        .cart-bar {
+            background: #111827;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 600px;
+            margin: 0 auto;
+            pointer-events: auto;
+            animation: slideIn 0.2s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .cart-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-count {
+            font-size: 0.75rem;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .cart-total {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .checkout-btn {
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 9px 18px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.92rem;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            cursor: pointer;
+        }
+
+        /* Modal Sheet */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 2000;
+            justify-content: center;
+            align-items: flex-end;
+            backdrop-filter: blur(2px);
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 600px;
+            border-radius: 20px 20px 0 0;
+            padding: 22px;
+            animation: slideUp 0.25s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #374151;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--primary);
+        }
+
+        .modal-btns {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        .btn-cancel {
+            background: #f3f4f6;
+            color: #4b5563;
+        }
+
+        .btn-submit {
+            background: #25D366;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 30px 10px;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand-title">
+            A2 Restaurant
+            <span class="veg-badge"><span class="veg-dot"></span> PURE VEG</span>
+        </div>
+        <div class="subtitle">Cloud Kitchen • QR Direct Ordering</div>
+    </header>
+
+    <div class="search-container">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" class="search-input" placeholder="Search dishes (e.g. Paneer, Paratha, Thali)..." oninput="filterMenu()">
+        </div>
+    </div>
+
+    <div class="category-nav-wrapper" id="navWrapper">
+        <div class="category-nav" id="categoryNav"></div>
+    </div>
+
+    <div class="container" id="menuContainer"></div>
+
+    <!-- Bottom Cart Bar -->
+    <div class="cart-bar-wrapper">
+        <div class="cart-bar" id="cartBar" style="display: none;">
+            <div class="cart-info">
+                <span class="cart-count" id="cartCount">0 ITEMS</span>
+                <span class="cart-total" id="cartTotal">₹0</span>
+            </div>
+            <button class="checkout-btn" onclick="openOrderModal()">
+                <i class="fab fa-whatsapp"></i> Order Now
+            </button>
+        </div>
+    </div>
+
+    <!-- Customer Details Modal -->
+    <div class="modal" id="orderModal" onclick="handleBackdropClick(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <h3 style="margin-bottom: 14px; font-size: 1.1rem; color: #111;">Delivery Details</h3>
+            <div class="form-group">
+                <label>Aapka Naam (Name) *</label>
+                <input type="text" id="custName" placeholder="Enter your full name">
+            </div>
+            <div class="form-group">
+                <label>Pura Pata (Delivery Address) *</label>
+                <textarea id="custAddress" rows="2" placeholder="House/Flat No, Landmark, Area..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Phone Number *</label>
+                <input type="tel" id="custPhone" maxlength="10" placeholder="10-digit mobile number">
+            </div>
+            <div class="modal-btns">
+                <button type="button" class="modal-btn btn-cancel" onclick="closeOrderModal()">Cancel</button>
+                <button type="button" class="modal-btn btn-submit" onclick="sendWhatsAppOrder()">
+                    <i class="fab fa-whatsapp"></i> Confirm Order
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Updated WhatsApp Number
+        const RESTAURANT_WHATSAPP_NUMBER = "919389205487";
+
+        // Menu Data
+        const menuData = [
+            {
+                category: "Combos & Thalis",
+                items: [
+                    { id: 1, name: "Special Thali", price: 177.45 },
+                    { id: 2, name: "Deluxe Thali", price: 240.45 },
+                    { id: 3, name: "Thali", price: 145.95 },
+                    { id: 4, name: "Jain Poori Sabji Thali", price: 124.95 },
+                    { id: 5, name: "Matar paneer with Tawa Roti combo", price: 177.45 },
+                    { id: 6, name: "Laccha Paratha With Matar paneer combo", price: 198.45 },
+                    { id: 7, name: "Dal Fry With Tawa Roti Combo", price: 166.95 },
+                    { id: 8, name: "Matar Aloo With Tawa Roti Combo", price: 124.95 },
+                    { id: 9, name: "Aloo Sabji With Tawa Roti Combo", price: 103.95 },
+                    { id: 10, name: "Aloo Fry With Paratha", price: 135.45 }
+                ]
+            },
+            {
+                category: "Chole & Poori",
+                items: [
+                    { id: 11, name: "Chole Chawal (Half)", price: 135.45 },
+                    { id: 12, name: "Chole Chawal (Full)", price: 187.95 },
+                    { id: 13, name: "Chole Kulcha (2 Kulcha)", price: 114.45 },
+                    { id: 14, name: "Chole Poori (5 Pcs)", price: 135.45 },
+                    { id: 15, name: "Chole Poori (10 Pcs)", price: 177.45 },
+                    { id: 16, name: "Aloo puri (5 Pcs)", price: 103.95 },
+                    { id: 17, name: "Aloo puri (10 Pcs)", price: 145.95 },
+                    { id: 18, name: "Aloo Kachori", price: 166.95 },
+                    { id: 19, name: "Aloo Pyaz Kachori", price: 177.45 }
+                ]
+            },
+            {
+                category: "Parathas & Roti",
+                items: [
+                    { id: 20, name: "Aloo Paratha", price: 82.95 },
+                    { id: 21, name: "Aloo pyaj paratha", price: 103.95 },
+                    { id: 22, name: "Aloo Paratha With Curd", price: 93.45 },
+                    { id: 23, name: "Aloo Cheese Paratha", price: 103.95 },
+                    { id: 24, name: "Paneer Paratha", price: 103.95 },
+                    { id: 25, name: "Gobhi Ka Paratha", price: 103.95 },
+                    { id: 26, name: "Matar Ka Paratha", price: 103.95 },
+                    { id: 27, name: "Sada paratha", price: 61.95 },
+                    { id: 28, name: "Lachha paratha", price: 61.95 },
+                    { id: 29, name: "Tawa Roti (Sada)", price: 12.60 },
+                    { id: 30, name: "Tawa Roti (Butter)", price: 15.75 }
+                ]
+            },
+            {
+                category: "Pizzas",
+                items: [
+                    { id: 31, name: "Onion Cheese pizza", price: 93.45 },
+                    { id: 32, name: "Tomato cheese Pizza", price: 93.45 },
+                    { id: 33, name: "Capsicum cheese Pizza", price: 93.45 },
+                    { id: 34, name: "Onion capsicum Cheese Pizza", price: 93.45 },
+                    { id: 35, name: "Paneer Onion Cheese Pizza", price: 124.95 },
+                    { id: 36, name: "Onion Capsicum Paneer Cheesy Pizza", price: 166.95 }
+                ]
+            },
+            {
+                category: "Maggi & Fast Food",
+                items: [
+                    { id: 37, name: "Plain Maggi", price: 82.95 },
+                    { id: 38, name: "Vegetable Maggi", price: 124.95 },
+                    { id: 39, name: "Butter Maggi", price: 124.95 },
+                    { id: 40, name: "Vegetable Butter Maggi", price: 166.95 },
+                    { id: 41, name: "Cheese Corn Maggi", price: 208.95 },
+                    { id: 42, name: "Pav Bhaji", price: 135.45 },
+                    { id: 43, name: "Veg Chowmein (Half)", price: 61.95 },
+                    { id: 44, name: "Veg Chowmein (Full)", price: 114.45 }
+                ]
+            },
+            {
+                category: "Sandwiches & Cheela",
+                items: [
+                    { id: 45, name: "Aloo sandwich", price: 82.95 },
+                    { id: 46, name: "Aloo Cheese Sandwich", price: 103.95 },
+                    { id: 47, name: "Veg Mayonnaise Sandwich", price: 145.95 },
+                    { id: 48, name: "Aloo Paneer Sandwich", price: 145.95 },
+                    { id: 49, name: "Besan Cheela", price: 72.45 },
+                    { id: 50, name: "Veggies Besan Cheela", price: 93.45 }
+                ]
+            },
+            {
+                category: "Curries & Main Course",
+                items: [
+                    { id: 51, name: "Matar Paneer (Half)", price: 166.95 },
+                    { id: 52, name: "Matar Paneer (Full)", price: 252.00 },
+                    { id: 53, name: "Chilli Paneer (Half)", price: 229.95 },
+                    { id: 54, name: "Chilli Paneer (Full)", price: 304.50 },
+                    { id: 55, name: "Paneer Special (Half)", price: 250.95 },
+                    { id: 56, name: "Paneer Special (Full)", price: 325.50 },
+                    { id: 57, name: "Aloo Fry (Half)", price: 103.95 },
+                    { id: 58, name: "Aloo Fry (Full)", price: 135.45 },
+                    { id: 59, name: "Aloo Matar", price: 82.95 }
+                ]
+            },
+            {
+                category: "Rice & Sides",
+                items: [
+                    { id: 60, name: "Poha (Half)", price: 72.45 },
+                    { id: 61, name: "Poha (Full)", price: 103.95 },
+                    { id: 62, name: "Plain Rice (Half)", price: 72.45 },
+                    { id: 63, name: "Plain Rice (Full)", price: 103.95 },
+                    { id: 64, name: "Dal Rice (Half)", price: 103.95 },
+                    { id: 65, name: "Dal Rice (Full)", price: 156.45 },
+                    { id: 66, name: "Boondi Raita", price: 72.45 },
+                    { id: 67, name: "Curd", price: 30.00 },
+                    { id: 68, name: "Salad", price: 20.00 },
+                    { id: 69, name: "Sada Chai", price: 40.95 },
+                    { id: 70, name: "Adrak Chai", price: 51.45 }
+                ]
+            }
+        ];
+
+        // Quick Lookup Map for fast calculations
+        const itemLookup = {};
+        menuData.forEach(cat => {
+            cat.items.forEach(item => {
+                itemLookup[item.id] = item;
+            });
+        });
+
+        let cart = {};
+
+        function renderMenu(filterKeyword = "") {
+            const catNav = document.getElementById('categoryNav');
+            const menuContainer = document.getElementById('menuContainer');
+            const navWrapper = document.getElementById('navWrapper');
+
+            catNav.innerHTML = '';
+            menuContainer.innerHTML = '';
+
+            const keyword = filterKeyword.toLowerCase().trim();
+            let totalRendered = 0;
+
+            if (keyword) {
+                navWrapper.style.display = "none";
+            } else {
+                navWrapper.style.display = "block";
+            }
+
+            menuData.forEach((cat, index) => {
+                const catId = `cat-${index}`;
+                const filteredItems = cat.items.filter(item => item.name.toLowerCase().includes(keyword));
+
+                if (filteredItems.length === 0) return;
+
+                totalRendered += filteredItems.length;
+
+                // Category Nav Pill
+                if (!keyword) {
+                    const btn = document.createElement('button');
+                    btn.className = `cat-btn ${index === 0 ? 'active' : ''}`;
+                    btn.id = `pill-${catId}`;
+                    btn.innerText = cat.category;
+                    btn.onclick = () => scrollToCategory(catId);
+                    catNav.appendChild(btn);
+                }
+
+                // Section Header
+                const title = document.createElement('div');
+                title.className = 'section-title';
+                title.id = catId;
+                title.innerText = cat.category;
+                menuContainer.appendChild(title);
+
+                // Items list
+                filteredItems.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'item-card';
+                    card.innerHTML = `
+                        <div class="item-details">
+                            <div class="veg-symbol"><span></span></div>
+                            <div class="item-name">${item.name}</div>
+                            <div class="item-price">₹${Math.round(item.price)}</div>
+                        </div>
+                        <div id="btn-box-${item.id}">
+                            ${renderButton(item.id)}
+                        </div>
+                    `;
+                    menuContainer.appendChild(card);
+                });
+            });
+
+            if (totalRendered === 0) {
+                menuContainer.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 8px; opacity: 0.4;"></i>
+                        <p>No dishes found matching "${filterKeyword}".</p>
+                    </div>
+                `;
+            }
+        }
+
+        function renderButton(itemId) {
+            const qty = cart[itemId] || 0;
+            if (qty > 0) {
+                return `
+                    <div class="add-btn-container">
+                        <button type="button" class="qty-btn" onclick="updateQty(${itemId}, -1)">−</button>
+                        <span class="qty-count">${qty}</span>
+                        <button type="button" class="qty-btn" onclick="updateQty(${itemId}, 1)">+</button>
+                    </div>
+                `;
+            }
+            return `<button type="button" class="btn-add" onclick="updateQty(${itemId}, 1)">ADD</button>`;
+        }
+
+        function updateQty(itemId, change) {
+            const currentQty = cart[itemId] || 0;
+            const newQty = currentQty + change;
+            if (newQty <= 0) {
+                delete cart[itemId];
+            } else {
+                cart[itemId] = newQty;
+            }
+
+            const box = document.getElementById(`btn-box-${itemId}`);
+            if (box) box.innerHTML = renderButton(itemId);
+
+            updateCartBar();
+        }
+
+        function updateCartBar() {
+            const cartBar = document.getElementById('cartBar');
+            let totalItems = 0;
+            let totalPrice = 0;
+
+            for (let id in cart) {
+                const qty = cart[id];
+                if (qty > 0 && itemLookup[id]) {
+                    totalItems += qty;
+                    totalPrice += Math.round(itemLookup[id].price) * qty;
+                }
+            }
+
+            if (totalItems > 0) {
+                cartBar.style.display = 'flex';
+                document.getElementById('cartCount').innerText = `${totalItems} ${totalItems === 1 ? 'ITEM' : 'ITEMS'}`;
+                document.getElementById('cartTotal').innerText = `Total: ₹${totalPrice}`;
+            } else {
+                cartBar.style.display = 'none';
+            }
+        }
+
+        function scrollToCategory(catId) {
+            const element = document.getElementById(catId);
+            if (!element) return;
+            const offset = 120;
+            const top = element.getBoundingClientRect().top + window.pageYOffset - offset;
+            window.scrollTo({ top, behavior: 'smooth' });
+        }
+
+        function filterMenu() {
+            const query = document.getElementById('searchInput').value;
+            renderMenu(query);
+        }
+
+        // Scrollspy to auto-highlight category tabs
+        window.addEventListener('scroll', () => {
+            const searchVal = document.getElementById('searchInput').value.trim();
+            if (searchVal) return;
+
+            const sections = document.querySelectorAll('.section-title');
+            let current = "";
+
+            sections.forEach(sec => {
+                const secTop = sec.getBoundingClientRect().top;
+                if (secTop <= 140) {
+                    current = sec.getAttribute('id');
+                }
+            });
+
+            if (current) {
+                document.querySelectorAll('.cat-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.id === `pill-${current}`) {
+                        btn.classList.add('active');
+                        btn.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' });
+                    }
+                });
+            }
+        });
+
+        function openOrderModal() {
+            document.getElementById('orderModal').classList.add('active');
+        }
+
+        function closeOrderModal() {
+            document.getElementById('orderModal').classList.remove('active');
+        }
+
+        function handleBackdropClick(e) {
+            if (e.target.id === 'orderModal') {
+                closeOrderModal();
+            }
+        }
+
+        function sendWhatsAppOrder() {
+            const name = document.getElementById('custName').value.trim();
+            const address = document.getElementById('custAddress').value.trim();
+            const phone = document.getElementById('custPhone').value.trim();
+
+            if (!name || !address || !phone) {
+                alert('Kripya saari details (Naam, Pata, Phone) bharein!');
+                return;
+            }
+
+            if (!/^\d{10}$/.test(phone)) {
+                alert('Kripya 10-digit valid mobile number enter karein!');
+                return;
+            }
+
+            let orderText = `*New Order - A2 Restaurant (Pure Veg)*\n`;
+            orderText += `--------------------------------\n`;
+            orderText += `👤 *Customer:* ${name}\n`;
+            orderText += `📞 *Phone:* ${phone}\n`;
+            orderText += `📍 *Address:* ${address}\n`;
+            orderText += `--------------------------------\n`;
+            orderText += `*Ordered Items:*\n`;
+
+            let grandTotal = 0;
+            for (let id in cart) {
+                const qty = cart[id];
+                if (qty > 0 && itemLookup[id]) {
+                    const item = itemLookup[id];
+                    const itemTotal = Math.round(item.price) * qty;
+                    grandTotal += itemTotal;
+                    orderText += `• ${item.name} × ${qty} = ₹${itemTotal}\n`;
+                }
+            }
+
+            orderText += `--------------------------------\n`;
+            orderText += `*Grand Total: ₹${grandTotal}*\n`;
+            orderText += `*Delivery Fee: ₹0 (Free)*\n\n`;
+            orderText += `_Order sent via QR Online Menu_`;
+
+            const encodedMessage = encodeURIComponent(orderText);
+            const whatsappUrl = `https://wa.me/${RESTAURANT_WHATSAPP_NUMBER}?text=${encodedMessage}`;
+
+            window.open(whatsappUrl, '_blank');
+            closeOrderModal();
+        }
+
+        // Initialize Menu
+        renderMenu();
+    </script>
+</body>
 </html>
